@@ -1,0 +1,9 @@
+[submodule "Transformer-Explainability"]
+	path = Transformer-Explainability
+	url = git@github.com:xingcw/Transformer-Explainability.git
+[submodule "probing-vits"]
+	path = probing-vits
+	url = git@github.com:xingcw/probing-vits.git
+[submodule "vit-explain"]
+	path = vit-explain
+	url = git@github.com:xingcw/vit-explain.git

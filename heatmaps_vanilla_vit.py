@@ -9,6 +9,7 @@ import torchvision.transforms as transforms
 
 from trans_exp.baselines.ViT.ViT_LRP import vit_base_patch16_224 as vit_LRP
 from trans_exp.baselines.ViT.ViT_explanation_generator import LRP
+from trans_exp.utils.load_weights import load_weights
 
 
 # create heatmap from mask on image
@@ -53,7 +54,7 @@ def generate_visualization(attribution_generator, original_image, class_index=No
 def main():
 
     flightmare_path = Path(os.environ["FLIGHTMARE_PATH"])
-    sample_path = flightmare_path / "flightpy/results/students/teacher_PPO_5/12-28-21-30-26/data/000/000007.npz"
+    sample_path = flightmare_path / "flightpy/results/students/teacher_PPO_5/12-26-14-24-47/data/000/000437.npz"
 
     image = np.load(sample_path)
     image = Image.fromarray(image["rgb"].squeeze())
@@ -73,9 +74,15 @@ def main():
 
     # initialize ViT pretrained
     model = vit_LRP(pretrained=True).cuda()
+    
+    # get trained weights in the correct format
+    weight_path = flightmare_path / "flightpy/results/students/teacher_PPO_5/vit_01-03-13-54-10/model/vit_ep20_data_data_584640.pth"
+    weights = load_weights(weight_path, "vit", "cuda")
+    
+    model.load_state_dict(weights, strict=False)
     model.eval()
+    
     attribution_generator = LRP(model)
-
     output = model(image.unsqueeze(0).cuda())
     heatmap = generate_visualization(attribution_generator, image)
 

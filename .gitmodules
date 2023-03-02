@@ -10,3 +10,6 @@
 [submodule "trans-mm-exp"]
 	path = trans-mm-exp
 	url = git@github.com:xingcw/Transformer-MM-Explainability.git
+[submodule "gradcam"]
+	path = gradcam
+	url = git@github.com:xingcw/pytorch-grad-cam.git
